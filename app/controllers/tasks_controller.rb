@@ -1,49 +1,52 @@
 class TasksController < ApplicationController
-    def index
-      @tasks = Task.all
-    end
+	before_action :set_task, only: [:show, :edit, :update, :destroy]
+	before_action :authenticate_user!
 
-		# GET with blank form
-    def new
-      @task = Task.new    
-		end
+	def index
+		@tasks = current_user.tasks
+	end
 
-		def show
-			@task = Task.find(params[:id])
-		end
+	# GET with blank form
+	def new
+		@task = Task.new    
+	end
 
-		def edit
-			@task = Task.find(params[:id])
-		end
+	def show
+	end
 
-    # POST to save task in database
-    def create
-			@task = Task.new(task_params())
-			if @task.save
-				redirect_to tasks_path
-			else
-				render :new
-			end
-		end
+	def edit
+	end
 
-		def update
-			@task = Task.find(params[:id])
+	# POST to save task in database
+	def create
+		@task = current_user.tasks.new(task_params)
 
-			if @task.update(task_params)
-				redirect_to tasks_path
-			else
-				render :edit
-			end
-		end
-
-		def destroy
-			@task = Task.find(params[:id])
-			@task.destroy
+		if @task.save
 			redirect_to tasks_path
+		else
+			render :new
 		end
-		
-		private
-			def task_params
-				params.require(:task).permit(:title, :description)
-			end
+	end
+
+	def update
+		if @task.update(task_params)
+			redirect_to tasks_path
+		else
+			render :edit
+		end
+	end
+
+	def destroy
+		@task.destroy
+		redirect_to tasks_path
+	end
+	
+	private
+		def task_params
+			params.require(:task).permit(:title, :description)
+		end
+
+		def set_task
+			@task = Task.find(params[:id])
+		end
 end
