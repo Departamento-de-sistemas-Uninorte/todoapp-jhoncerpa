@@ -5,5 +5,5 @@ class Task < ApplicationRecord
   validates :title, presence: true
   validates :description, length: { maximum: 280 }
 
-  attr_accesor :name, :email
+  attr_accessor :name, :email
 end
