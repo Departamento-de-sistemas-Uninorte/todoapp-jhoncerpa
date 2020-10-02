@@ -22,6 +22,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do  
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'sqlite3', '~> 1.4'
+  gem 'rspec-rails', '~> 4.0.1'
 end
 
 group :development do  
@@ -37,6 +38,8 @@ group :test do
   gem 'selenium-webdriver'
   
   gem 'webdrivers'
+
+  gem 'shoulda-matchers', '~> 4.0'
 end
 
 group :production do
